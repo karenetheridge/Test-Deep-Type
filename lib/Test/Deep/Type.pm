@@ -3,37 +3,75 @@ use warnings;
 package Test::Deep::Type;
 # ABSTRACT: ...
 
+use parent 'Test::Deep::Cmp';
 use Exporter 'import';
-use Test::Deep '!blessed';
 use Scalar::Util 'blessed';
 use Safe::Isa;
 
 our @EXPORT = qw(is_type);
 
-sub is_type
+sub is_type($)
 {
     my $type = shift;
+    return __PACKAGE__->new($type);
+}
 
-    return code(sub {
-        my $got = shift;
+sub init
+{
+    my ($self, $type) = @_;
+    $self->{type} = $type;
+}
 
-        my $error_message =
-            $type->$_can('validate')
-            ? $type->validate($got)
-            :
-                # otherwise, assume it is or quacks like a coderef
-                $type->($got)
-                ? undef     # validation succeeded
-                : _type_name($type) . ' validation did not succeed';
+sub descend
+{
+    my ($self, $got) = @_;
+    return $self->_is_type($self->{type}, $got);
+}
 
-        return 1 if not $error_message;
-        return 0, $error_message;
-    });
+sub diag_message
+{
+    my ($self, $where) = @_;
+    return "Validating $where as a " . $self->_type_name($self->{type}) . ' type';
+}
+
+# we do not define a diagnostics sub, so we get the one produced by deep_diag
+# showing exactly what part of the data structure failed. This calls renderGot
+# and renderVal:
+
+sub renderGot
+{
+    my $self = shift;
+    return $self->{error_message};
+}
+
+sub renderExp
+{
+    my $self = shift;
+    return 'no error';
+}
+
+sub _is_type
+{
+    my ($self, $type, $got) = @_;
+
+    my $error_message =
+        $type->$_can('validate')
+        ? $type->validate($got)
+        :
+            # otherwise, assume it is or quacks like a coderef
+            $type->($got)
+            ? undef     # validation succeeded
+            : 'failed';
+
+    return 1 if not defined $error_message;
+
+    $self->{error_message} = $error_message;
+    return;
 }
 
 sub _type_name
 {
-    my $type = shift;
+    my ($self, $type) = @_;
 
     # use $type->name if we can
     my $name_sub = $type->$_can('name');

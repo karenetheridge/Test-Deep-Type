@@ -7,9 +7,6 @@ use Test::NoWarnings 1.04 ':early';
 use Test::Deep;
 use Test::Deep::Type;
 
-# this should not be needed...
-# Test::Deep::builder(Test::Tester::capture());
-
 # the first type is an object that implements 'validate', just like
 # MooseX::Types and Moose::Meta::TypeConstraint do
 {
@@ -66,18 +63,33 @@ my ($premature, @results) = run_tests(
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiLite) }, 'hello validates as a TypeHiLite?');
     },
 );
+
 Test::Tester::cmp_results(
     \@results,
-    [ map { +{
-        actual_ok => 0,
-        ok => 0,
-        name => "hello validates as a $_?",
-        type => '',
-    } } qw(TypeHi TypeHiLite) ],
+    [
+        {
+            actual_ok => 0,
+            ok => 0,
+            name => "hello validates as a TypeHi?",
+            type => '',
+            diag => <<EOM,
+Validating \$data->{"greeting"} as a TypeHi type
+   got : 'hello' is not a 'hi'
+expect : no error
+EOM
+        },
+        {
+            actual_ok => 0,
+            ok => 0,
+            name => "hello validates as a TypeHiLite?",
+            type => '',
+            diag => <<EOM,
+Validating \$data->{"greeting"} as a TypeHiLite type
+   got : failed
+expect : no error
+EOM
+        },
+    ],
     'validation fails',
 );
-
-# for now, we care just that the diagnostic is in there somewhere
-like($results[0]->{diag}, qr/'hello' is not a 'hi'/, 'error message is included');
-like($results[1]->{diag}, qr/TypeHiLite validation did not succeed/);
 
