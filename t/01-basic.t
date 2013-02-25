@@ -2,7 +2,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
-use Test::More tests => 33;
+use Test::More tests => 47;
 use Test::NoWarnings 1.04 ':early';
 use Test::Deep;
 use Test::Deep::Type;
@@ -41,10 +41,27 @@ ok(TypeHiLite->('hi'), 'validation succeeds (no error)');
 ok(!TypeHiLite->('hello'), 'validation fails with a simple bool');
 
 
+# the next type is a plain old unblessed coderef, returning a simple boolean
+# "did this validate"
+sub TypeHiTiny
+{
+    sub {
+        my $val = shift;
+        return if not defined $val;
+        return 1 if $val eq 'hi';   # validated: no error
+        return;
+    };
+}
+
+ok(TypeHiTiny->('hi'), 'validation succeeds (no error)');
+ok(!TypeHiTiny->('hello'), 'validation fails with a simple bool');
+
+
 check_tests(
     sub {
         cmp_deeply({ greeting => 'hi' }, { greeting => is_type(TypeHi) }, 'hi validates as a TypeHi');
         cmp_deeply({ greeting => 'hi' }, { greeting => is_type(TypeHiLite) }, 'hi validates as a TypeHiLite');
+        cmp_deeply({ greeting => 'hi' }, { greeting => is_type(TypeHiTiny) }, 'hi validates as a TypeHiTiny');
     },
     [ map { +{
         actual_ok => 1,
@@ -52,7 +69,7 @@ check_tests(
         diag => '',
         name => "hi validates as a $_",
         type => '',
-    } } qw(TypeHi TypeHiLite) ],
+    } } qw(TypeHi TypeHiLite TypeHiTiny) ],
     'validation successful',
 );
 
@@ -61,6 +78,9 @@ my ($premature, @results) = run_tests(
     sub {
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHi) }, 'hello validates as a TypeHi?');
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiLite) }, 'hello validates as a TypeHiLite?');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiTiny) }, 'hello validates as a TypeHiTiny?');
+# TODO
+#        cmp_deeply({ greeting => 'hello' }, { greeting => is_type('not a ref!') }, 'hello validates against an arbitrary subref?');
     },
 );
 
@@ -85,6 +105,17 @@ EOM
             type => '',
             diag => <<EOM,
 Validating \$data->{"greeting"} as a TypeHiLite type
+   got : failed
+expect : no error
+EOM
+        },
+        {
+            actual_ok => 0,
+            ok => 0,
+            name => "hello validates as a TypeHiTiny?",
+            type => '',
+            diag => <<EOM,
+Validating \$data->{"greeting"} as an unknown type
    got : failed
 expect : no error
 EOM

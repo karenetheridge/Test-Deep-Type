@@ -31,7 +31,10 @@ sub descend
 sub diag_message
 {
     my ($self, $where) = @_;
-    return "Validating $where as a " . $self->_type_name($self->{type}) . ' type';
+    my $name = $self->_type_name($self->{type});
+    return "Validating $where as a"
+        . (defined $name ? ' ' . $name : 'n unknown')
+        . ' type';
 }
 
 # we do not define a diagnostics sub, so we get the one produced by deep_diag
@@ -82,7 +85,7 @@ sub _type_name
     return $class if defined $class;
 
     # plain old subref perhaps?
-    return 'unknown type';
+    return;
 }
 
 1;
