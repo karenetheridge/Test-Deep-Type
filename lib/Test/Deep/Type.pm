@@ -137,7 +137,9 @@ might be used in a L<Moo> type constraint).
 
 =item * C<is_type>
 
-Exported by default.  As this module aims to be a solution for many popular
+Exported by default; to be used within a L<Test::Deep> comparison function
+such as L<cmp_deeply|Test::Deep/COMPARISON FUNCTIONS>.
+As this module aims to be a solution for many popular
 type systems, we attempt to use the type in multiple ways:
 
 =over
@@ -169,7 +171,7 @@ renderGot
 
 =head1 CAVEATS
 
-At the moment, regular strings describing a type under a particular system
+Regular strings describing a type under a particular system
 (e.g. L<Moose>, L<Params::Validate>) are not currently supported.
 
 =head1 SUPPORT
