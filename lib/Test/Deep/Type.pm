@@ -87,8 +87,8 @@ sub _type_name
     my ($self, $type) = @_;
 
     # use $type->name if we can
-    my $name_sub = $type->$_can('name');
-    return $name_sub->() if $name_sub;
+    my $name = try { $type->name };
+    return $name if $name;
 
     # ...or its package name, if it has one
     my $class = blessed($type);

@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - fix extraction of type name from MooseX::Types types
 
 0.001     2013-03-02 11:42:45 PST-0800 (Karen Etheridge)
           - initial release
