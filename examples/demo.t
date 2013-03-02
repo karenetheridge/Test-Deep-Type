@@ -1,7 +1,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-use Test::More tests => 2;
+use Test::More;
 use Test::Deep;
 use Test::Deep::Type;
 
@@ -26,6 +26,7 @@ cmp_deeply(
 cmp_deeply(
     { greeting => 'hello' },
     { greeting => is_type(TypeHi) },
-    'hello validates as a TypeHi?',
+    'hello validates as a TypeHi',
 );
 
+done_testing if not $INC{'Test/Tester.pm'};
