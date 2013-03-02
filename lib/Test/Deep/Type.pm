@@ -5,8 +5,9 @@ package Test::Deep::Type;
 
 use parent 'Test::Deep::Cmp';
 use Exporter 'import';
-use Scalar::Util 'blessed';
+use Scalar::Util qw(blessed reftype);
 use Safe::Isa;
+use Try::Tiny;
 
 our @EXPORT = qw(is_type);
 
@@ -44,7 +45,7 @@ sub diag_message
 sub renderGot
 {
     my $self = shift;
-    return $self->{error_message};
+    return defined $self->{error_message} ? $self->{error_message} : 'failed';
 }
 
 sub renderExp
@@ -57,19 +58,28 @@ sub _is_type
 {
     my ($self, $type, $got) = @_;
 
-    my $error_message =
-        $type->$_can('validate')
-        ? $type->validate($got)
-        :
-            # otherwise, assume it is or quacks like a coderef
+    if ($type->$_can('validate'))
+    {
+        $self->{error_message} = $type->validate($got);
+        return !defined($self->{error_message});
+    }
+
+    # last ditch effort - use the type as a coderef
+    if (__isa_coderef($type))
+    {
+        return try {
             $type->($got)
-            ? undef     # validation succeeded
-            : 'failed';
+        } catch {
+            $self->{error_message} = $_;
+            undef;
+        };
+    }
 
-    return 1 if not defined $error_message;
+    # for now, stringy types are not supported. If a known Moose type, use
+    # Moose::Util::TypeConstraints::find_type_constraint('typename').
 
-    $self->{error_message} = $error_message;
-    return;
+    $self->{error_message} = "Can't figure out how to use '$type' as a type";
+    undef;
 }
 
 sub _type_name
@@ -86,6 +96,13 @@ sub _type_name
 
     # plain old subref perhaps?
     return;
+}
+
+sub __isa_coderef
+{
+    ref $_[0] eq 'CODE'
+        or (reftype($_[0]) || '') eq 'CODE'
+        or overload::Method($_[0], '&{}')
 }
 
 1;

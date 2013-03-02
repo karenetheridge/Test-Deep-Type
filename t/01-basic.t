@@ -2,7 +2,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
-use Test::More tests => 47;
+use Test::More tests => 53;
 use Test::NoWarnings 1.04 ':early';
 use Test::Deep;
 use Test::Deep::Type;
@@ -79,8 +79,7 @@ my ($premature, @results) = run_tests(
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHi) }, 'hello validates as a TypeHi?');
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiLite) }, 'hello validates as a TypeHiLite?');
         cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiTiny) }, 'hello validates as a TypeHiTiny?');
-# TODO
-#        cmp_deeply({ greeting => 'hello' }, { greeting => is_type('not a ref!') }, 'hello validates against an arbitrary subref?');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type('not a ref!') }, 'hello validates against an arbitrary subref?');
     },
 );
 
@@ -120,7 +119,22 @@ Validating \$data->{"greeting"} as an unknown type
 expect : no error
 EOM
         },
+        {
+            actual_ok => 0,
+            ok => 0,
+            name => 'hello validates against an arbitrary subref?',
+            type => '',
+            # see diag check below
+        },
     ],
     'validation fails',
+);
+
+like(
+    $results[3]->{diag},
+    qr/\A^Validating \$data->{"greeting"} as an unknown type$
+^   got : Can't figure out how to use 'not a ref!' as a type.*$
+^expect : no error$/ms,
+    'diagnostics are clear that we cannot figure out how to use the type',
 );
 
