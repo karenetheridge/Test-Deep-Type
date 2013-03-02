@@ -160,6 +160,13 @@ failure diagnostics.
 
 =back
 
+=for Pod::Coverage
+descend
+diag_message
+init
+renderExp
+renderGot
+
 =head1 CAVEATS
 
 At the moment, regular strings describing a type under a particular system
