@@ -31,7 +31,9 @@ might be used in a [Moo](http://search.cpan.org/perldoc?Moo) type constraint).
 
 - `is_type`
 
-    Exported by default.  As this module aims to be a solution for many popular
+    Exported by default; to be used within a [Test::Deep](http://search.cpan.org/perldoc?Test::Deep) comparison function
+    such as [cmp\_deeply](http://search.cpan.org/perldoc?Test::Deep#COMPARISON FUNCTIONS).
+    As this module aims to be a solution for many popular
     type systems, we attempt to use the type in multiple ways:
 
     - [MooseX::Types](http://search.cpan.org/perldoc?MooseX::Types)/[Moose::Meta::TypeConstraint](http://search.cpan.org/perldoc?Moose::Meta::TypeConstraint)\-style types:
@@ -50,7 +52,7 @@ might be used in a [Moo](http://search.cpan.org/perldoc?Moo) type constraint).
 
 # CAVEATS
 
-At the moment, regular strings describing a type under a particular system
+Regular strings describing a type under a particular system
 (e.g. [Moose](http://search.cpan.org/perldoc?Moose), [Params::Validate](http://search.cpan.org/perldoc?Params::Validate)) are not currently supported.
 
 # SUPPORT
