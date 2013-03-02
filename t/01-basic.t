@@ -82,10 +82,10 @@ check_tests(
 
 my ($premature, @results) = run_tests(
     sub {
-        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHi) }, 'hello validates as a TypeHi?');
-        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiLite) }, 'hello validates as a TypeHiLite?');
-        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiTiny) }, 'hello validates as a TypeHiTiny?');
-        cmp_deeply({ greeting => 'hello' }, { greeting => is_type('not a ref!') }, 'hello validates against an arbitrary subref?');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHi) }, 'hello validates as a TypeHi');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiLite) }, 'hello validates as a TypeHiLite');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type(TypeHiTiny) }, 'hello validates as a TypeHiTiny');
+        cmp_deeply({ greeting => 'hello' }, { greeting => is_type('not a ref!') }, 'hello validates against an arbitrary subref');
     },
 );
 
@@ -95,7 +95,7 @@ Test::Tester::cmp_results(
         {
             actual_ok => 0,
             ok => 0,
-            name => "hello validates as a TypeHi?",
+            name => 'hello validates as a TypeHi',
             type => '',
             diag => <<EOM,
 Validating \$data->{"greeting"} as a TypeHi type
@@ -106,7 +106,7 @@ EOM
         {
             actual_ok => 0,
             ok => 0,
-            name => "hello validates as a TypeHiLite?",
+            name => "hello validates as a TypeHiLite",
             type => '',
             diag => <<EOM,
 Validating \$data->{"greeting"} as a TypeHiLite type
@@ -117,7 +117,7 @@ EOM
         {
             actual_ok => 0,
             ok => 0,
-            name => "hello validates as a TypeHiTiny?",
+            name => "hello validates as a TypeHiTiny",
             type => '',
             diag => <<EOM,
 Validating \$data->{"greeting"} as an unknown type
@@ -128,7 +128,7 @@ EOM
         {
             actual_ok => 0,
             ok => 0,
-            name => 'hello validates against an arbitrary subref?',
+            name => 'hello validates against an arbitrary subref',
             type => '',
             # see diag check below
         },
