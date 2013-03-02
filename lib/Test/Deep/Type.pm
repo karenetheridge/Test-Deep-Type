@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Test::Deep::Type;
-# ABSTRACT: ...
+# ABSTRACT: A Test::Deep plugin for validating type constraints
 
 use parent 'Test::Deep::Cmp';
 use Exporter 'import';
@@ -112,29 +112,72 @@ __END__
 
 =head1 SYNOPSIS
 
-...
+    use Test::More;
+    use Test::Deep;
+    use Test::Deep::Type;
+    use MooseX::Types::Moose 'Str';
 
-=head1 METHODS
+    cmp_deeply(
+        { message => 'ack I am slain' },
+        { message => is_type(Str) },
+        'message is a plain string',
+    );
+
+=head1 DESCRIPTION
+
+C<Test::Deep::Type> provides the sub C<is_type> to indicate that the data
+being tested must validate against the passed type. This is an actual type
+I<object>, not a string name -- for example something provided via
+L<MooseX::Types>, or a plain old coderef that returns a bool (such as what
+might be used in a L<Moo> type constraint).
+
+=head1 FUNCTIONS
 
 =over
 
-=item * C<foo>
+=item * C<is_type>
+
+Exported by default.  As this module aims to be a solution for many popular
+type systems, we attempt to use the type in multiple ways:
+
+=over
+
+=item L<MooseX::Types>/L<Moose::Meta::TypeConstraint>-style types:
+
+If the C<validate> method exists, it is invoked on the type object with the
+data as its parameter (which should return C<undef> on success, and the error
+message on failure).
+
+=item coderef/L<Moo>-style types:
+
+If the type appears to be or act like a coderef (either a coderef, blessed or
+unblessed, or possesses a coderef overload) the type is invoked as a sub, with
+the data as its parameter. Its return value is treated as a boolean; if it
+also dies with a message describing the failure, this message is used in the
+failure diagnostics.
 
 =back
 
-...
+=back
+
+=head1 CAVEATS
+
+At the moment, regular strings describing a type under a particular system
+(e.g. L<Moose>, L<Params::Validate>) are not currently supported.
 
 =head1 SUPPORT
 
-Bugs may be submitted through L<https://rt.cpan.org/Public/Dist/Display.html?Name={{ $DIST }} >.
+Bugs may be submitted through L<https://rt.cpan.org/Public/Dist/Display.html?Name=Test-Deep-Type>.
 I am also usually active on irc, as 'ether' at L<irc://irc.perl.org>.
-
-=head1 ACKNOWLEDGEMENTS
-
-...
 
 =head1 SEE ALSO
 
-...
+L<Test::Deep>
+
+L<MooseX::Types>
+
+L<Moose::Meta::TypeConstraints>
+
+L<Moo>
 
 =cut
