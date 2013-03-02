@@ -4,6 +4,7 @@ use warnings FATAL => 'all';
 use Test::Tester 0.108;
 use Test::More tests => 53;
 use Test::NoWarnings 1.04 ':early';
+use Test::Fatal;
 use Test::Deep;
 use Test::Deep::Type;
 
@@ -25,37 +26,42 @@ sub TypeHi { bless {}, 'TypeHi' }
 is(TypeHi->validate('hi'), undef, 'validation succeeds (no error)');
 is(TypeHi->validate('hello'), "'hello' is not a 'hi'", 'validation fails with error');
 
-# the next type is an object that quacks like a coderef, returning a simple
-# boolean "did this validate"
+# the next type is an object that quacks like a coderef, dying if validation
+# failed
 sub TypeHiLite
 {
     bless sub {
         my $val = shift;
-        return if not defined $val;
-        return 1 if $val eq 'hi';   # validated: no error
-        return;
+        die((defined $val ? "'" . $val . "'" : '<undef>'), " is not a 'hi'\n")
+            unless defined $val and $val eq 'hi';
     }, 'TypeHiLite';
 }
 
-ok(TypeHiLite->('hi'), 'validation succeeds (no error)');
-ok(!TypeHiLite->('hello'), 'validation fails with a simple bool');
+is(
+    exception { TypeHiLite->('hi') },
+    undef,
+    'validation succeeds (no error)',
+);
+like(
+    exception { TypeHiLite->('hello') },
+    qr/'hello' is not a 'hi'/,
+    'validation fails with an exception',
+);
 
 
 # the next type is a plain old unblessed coderef, returning a simple boolean
-# "did this validate"
+# "did this validate", with no error message
 sub TypeHiTiny
 {
     sub {
         my $val = shift;
-        return if not defined $val;
-        return 1 if $val eq 'hi';   # validated: no error
+        return 1 if defined $val and $val eq 'hi';   # validated: no error
         return;
     };
 }
 
 ok(TypeHiTiny->('hi'), 'validation succeeds (no error)');
 ok(!TypeHiTiny->('hello'), 'validation fails with a simple bool');
-
 
 check_tests(
     sub {
@@ -104,7 +110,7 @@ EOM
             type => '',
             diag => <<EOM,
 Validating \$data->{"greeting"} as a TypeHiLite type
-   got : failed
+   got : 'hello' is not a 'hi'
 expect : no error
 EOM
         },

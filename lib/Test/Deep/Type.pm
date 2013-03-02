@@ -70,7 +70,7 @@ sub _is_type
         return try {
             $type->($got)
         } catch {
-            $self->{error_message} = $_;
+            chomp($self->{error_message} = $_);
             undef;
         };
     }
@@ -79,7 +79,7 @@ sub _is_type
     # Moose::Util::TypeConstraints::find_type_constraint('typename').
 
     $self->{error_message} = "Can't figure out how to use '$type' as a type";
-    undef;
+    return;
 }
 
 sub _type_name
