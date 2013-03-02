@@ -11,7 +11,8 @@ use Test::Deep::Type;
 # the first type is an object that implements 'validate', just like
 # MooseX::Types and Moose::Meta::TypeConstraint do
 {
-    package TypeHi;
+    package MyType::TypeHi;
+    use overload('""' => sub { 'TypeHi' });
     sub validate
     {
         my ($self, $val) = @_;
@@ -21,7 +22,7 @@ use Test::Deep::Type;
     }
 }
 
-sub TypeHi { bless {}, 'TypeHi' }
+sub TypeHi { bless {}, 'MyType::TypeHi' }
 
 is(TypeHi->validate('hi'), undef, 'validation succeeds (no error)');
 is(TypeHi->validate('hello'), "'hello' is not a 'hi'", 'validation fails with error');

@@ -90,6 +90,9 @@ sub _type_name
     my $name = try { $type->name };
     return $name if $name;
 
+    # ...or stringify, if possible
+    return "$type" if overload::Method($type, '""');
+
     # ...or its package name, if it has one
     my $class = blessed($type);
     return $class if defined $class;
