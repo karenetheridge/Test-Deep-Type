@@ -194,7 +194,7 @@ L<Test::Deep>
 
 L<MooseX::Types>
 
-L<Moose::Meta::TypeConstraints>
+L<Moose::Meta::TypeConstraint>
 
 L<Moo>
 

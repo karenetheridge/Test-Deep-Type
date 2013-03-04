@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - fixed bad link in 'SEE ALSO'
 
 0.002     2013-03-04 10:43:05 PST-0800 (Karen Etheridge)
           - fix extraction of type name from MooseX::Types types
