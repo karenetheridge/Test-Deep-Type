@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.002     2013-03-04 10:43:05 PST-0800 (Karen Etheridge)
           - fix extraction of type name from MooseX::Types types
           - make use of string overload to extract the type name
           - fix use of unescaped literal { in regexp (warns in 5.17.*)

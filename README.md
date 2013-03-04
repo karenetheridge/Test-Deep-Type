@@ -4,7 +4,7 @@ Test::Deep::Type - A Test::Deep plugin for validating type constraints
 
 # VERSION
 
-version 0.001
+version 0.002
 
 # SYNOPSIS
 
@@ -14,9 +14,15 @@ version 0.001
     use MooseX::Types::Moose 'Str';
 
     cmp_deeply(
-        { message => 'ack I am slain' },
-        { message => is_type(Str) },
-        'message is a plain string',
+        {
+            message => 'ack I am slain',
+            counter => 123,
+        },
+        {
+            message => is_type(Str),
+            counter => is_type(sub { die "not an integer" unless int($_[0]) eq $_[0] }),
+        },
+        'message is a plain string, counter is a number',
     );
 
 # DESCRIPTION
