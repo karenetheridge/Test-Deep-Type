@@ -139,7 +139,7 @@ EOM
 
 like(
     $results[3]->{diag},
-    qr/\A^Validating \$data->{"greeting"} as an unknown type$
+    qr/\A^Validating \$data->\{"greeting"\} as an unknown type$
 ^   got : Can't figure out how to use 'not a ref!' as a type.*$
 ^expect : no error$/ms,
     'diagnostics are clear that we cannot figure out how to use the type',
