@@ -15,7 +15,7 @@ use Test::Deep;
 
 use Test::Deep::Type;
 
-check_tests(
+my @results = check_tests(
     sub {
         cmp_deeply(
             { message => 'ack I am slain' },
@@ -41,13 +41,19 @@ check_tests(
             ok => 0,
             name => 'message is a string',
             type => '',
-            diag => <<EOM,
-Validating \$data->{"message"} as a Str type
-   got : Validation failed for 'Str' with value { foo: 1 }
-expect : no error
-EOM
+            # see diag check below
         },
     ],
     'success and failure with a MooseX::Types type',
+);
+
+# we don't know if Devel::PartialDump is installed, which changes how the
+# value is dumped
+like(
+    $results[-1]->{diag},
+    qr/\A^Validating \$data->\{"message"\} as a Str type$
+^   got : Validation failed for 'Str' with value [^\n]+$
+^expect : no error$/ms,
+    'diag failure message',
 );
 
