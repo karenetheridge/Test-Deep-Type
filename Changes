@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.003     2013-03-06 12:33:50 PST-0800 (Karen Etheridge)
           - fixed bad link in 'SEE ALSO'
           - fixed test failure due to bad plan when MooseX::Types is not
             available
