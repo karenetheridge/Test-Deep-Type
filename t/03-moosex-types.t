@@ -2,18 +2,18 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
-use Test::More tests => 16;
-use Test::NoWarnings 1.04 ':early';
-use Test::Fatal;
-
-use Test::Deep;
-use Test::Deep::Type;
 
 # FIXME: we should be able to pass an import arg to Test::Requires
 BEGIN {
     use Test::Requires 'MooseX::Types::Moose';
     MooseX::Types::Moose->import('Str');
 }
+use Test::More tests => 16;
+use Test::NoWarnings 1.04 ':early';
+use Test::Fatal;
+use Test::Deep;
+
+use Test::Deep::Type;
 
 check_tests(
     sub {
