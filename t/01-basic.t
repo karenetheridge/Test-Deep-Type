@@ -3,7 +3,7 @@ use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
 use Test::More tests => 53;
-use Test::NoWarnings 1.04 ':early';
+use Test::Warnings;
 use Test::Fatal;
 use Test::Deep;
 use Test::Deep::Type;

@@ -3,7 +3,7 @@ use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
 use Test::More tests => 16;
-use Test::NoWarnings 1.04 ':early';
+use Test::Warnings;
 
 check_tests(
     sub {

@@ -9,7 +9,7 @@ BEGIN {
     MooseX::Types::Moose->import('Str');
 }
 use Test::More tests => 16;
-use Test::NoWarnings 1.04 ':early';
+use Test::Warnings;
 use Test::Fatal;
 use Test::Deep;
 
