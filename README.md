@@ -4,7 +4,7 @@ Test::Deep::Type - A Test::Deep plugin for validating type constraints
 
 # VERSION
 
-version 0.003
+version 0.004
 
 # SYNOPSIS
 
@@ -70,11 +70,17 @@ I am also usually active on irc, as 'ether' at [irc://irc.perl.org](irc://irc.pe
 
 [Test::Deep](http://search.cpan.org/perldoc?Test::Deep)
 
+[Test::TypeConstraints](http://search.cpan.org/perldoc?Test::TypeConstraints)
+
+[Test::Type](http://search.cpan.org/perldoc?Test::Type)
+
 [MooseX::Types](http://search.cpan.org/perldoc?MooseX::Types)
 
 [Moose::Meta::TypeConstraint](http://search.cpan.org/perldoc?Moose::Meta::TypeConstraint)
 
 [Moo](http://search.cpan.org/perldoc?Moo)
+
+[Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)
 
 # AUTHOR
 
