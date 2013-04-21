@@ -192,6 +192,10 @@ I am also usually active on irc, as 'ether' at L<irc://irc.perl.org>.
 
 L<Test::Deep>
 
+L<Test::TypeConstraints>
+
+L<Test::Type>
+
 L<MooseX::Types>
 
 L<Moose::Meta::TypeConstraint>
