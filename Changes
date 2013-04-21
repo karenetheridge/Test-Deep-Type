@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - added references to a few other test and type libraries in
+            SEE ALSO
 
 0.003     2013-03-06 12:33:50 PST-0800 (Karen Etheridge)
           - fixed bad link in 'SEE ALSO'
