@@ -202,4 +202,6 @@ L<Moose::Meta::TypeConstraint>
 
 L<Moo>
 
+L<Type::Tiny>
+
 =cut
