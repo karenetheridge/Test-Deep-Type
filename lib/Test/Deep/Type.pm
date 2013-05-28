@@ -167,6 +167,8 @@ the data as its parameter. Its return value is treated as a boolean; if it
 also dies with a message describing the failure, this message is used in the
 failure diagnostics.
 
+L<Type::Tiny> types fall into this category, and are fully supported.
+
 =back
 
 =back
