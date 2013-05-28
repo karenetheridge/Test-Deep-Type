@@ -196,6 +196,8 @@ L<Test::TypeConstraints>
 
 L<Test::Type>
 
+L<Test::Deep::Matcher>
+
 L<MooseX::Types>
 
 L<Moose::Meta::TypeConstraint>
