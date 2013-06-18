@@ -192,20 +192,15 @@ I am also usually active on irc, as 'ether' at L<irc://irc.perl.org>.
 
 =head1 SEE ALSO
 
-L<Test::Deep>
+=for :list
 
-L<Test::TypeConstraints>
-
-L<Test::Type>
-
-L<Test::Deep::Matcher>
-
-L<MooseX::Types>
-
-L<Moose::Meta::TypeConstraint>
-
-L<Moo>
-
-L<Type::Tiny>
+* L<Test::Deep>
+* L<Test::TypeConstraints>
+* L<Test::Type>
+* L<Test::Deep::Matcher>
+* L<MooseX::Types>
+* L<Moose::Meta::TypeConstraint>
+* L<Moo>
+* L<Type::Tiny>
 
 =cut
