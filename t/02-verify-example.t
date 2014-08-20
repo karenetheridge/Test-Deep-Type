@@ -2,8 +2,8 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
-use Test::More tests => 16;
-use Test::Warnings;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 check_tests(
     sub {
@@ -33,3 +33,4 @@ EOM
     'examples perform as advertised',
 );
 
+done_testing;

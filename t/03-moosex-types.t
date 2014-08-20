@@ -8,8 +8,8 @@ BEGIN {
     use Test::Requires 'MooseX::Types::Moose';
     MooseX::Types::Moose->import('Str');
 }
-use Test::More tests => 16;
-use Test::Warnings;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::Fatal;
 use Test::Deep;
 
@@ -57,3 +57,4 @@ like(
     'diag failure message',
 );
 
+done_testing;

@@ -2,8 +2,8 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::Tester 0.108;
-use Test::More tests => 53;
-use Test::Warnings;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::Fatal;
 use Test::Deep;
 use Test::Deep::Type;
@@ -145,3 +145,4 @@ like(
     'diagnostics are clear that we cannot figure out how to use the type',
 );
 
+done_testing;
