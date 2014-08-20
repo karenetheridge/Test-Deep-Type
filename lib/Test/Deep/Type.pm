@@ -6,10 +6,11 @@ package Test::Deep::Type;
 # vim: set ts=8 sw=4 tw=78 et :
 
 use parent 'Test::Deep::Cmp';
-use Exporter 'import';
 use Scalar::Util qw(blessed reftype);
 use Safe::Isa;
 use Try::Tiny;
+use namespace::clean;
+use Exporter 'import';
 
 our @EXPORT = qw(is_type);
 
