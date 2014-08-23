@@ -1,0 +1,119 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Test::Deep::Type - A Test::Deep plugin for validating type constraints
+
+=head1 VERSION
+
+version 0.005
+
+=head1 SYNOPSIS
+
+    use Test::More;
+    use Test::Deep;
+    use Test::Deep::Type;
+    use MooseX::Types::Moose 'Str';
+
+    cmp_deeply(
+        {
+            message => 'ack I am slain',
+            counter => 123,
+        },
+        {
+            message => is_type(Str),
+            counter => is_type(sub { die "not an integer" unless int($_[0]) eq $_[0] }),
+        },
+        'message is a plain string, counter is a number',
+    );
+
+=head1 DESCRIPTION
+
+C<Test::Deep::Type> provides the sub C<is_type> to indicate that the data
+being tested must validate against the passed type. This is an actual type
+I<object>, not a string name -- for example something provided via
+L<MooseX::Types>, or a plain old coderef that returns a bool (such as what
+might be used in a L<Moo> type constraint).
+
+=head1 FUNCTIONS
+
+=over
+
+=item * C<is_type>
+
+Exported by default; to be used within a L<Test::Deep> comparison function
+such as L<cmp_deeply|Test::Deep/COMPARISON FUNCTIONS>.
+As this module aims to be a solution for many popular
+type systems, we attempt to use the type in multiple ways:
+
+=over
+
+=item L<MooseX::Types>/L<Moose::Meta::TypeConstraint>-style types:
+
+If the C<validate> method exists, it is invoked on the type object with the
+data as its parameter (which should return C<undef> on success, and the error
+message on failure).
+
+=item coderef/L<Moo>-style types:
+
+If the type appears to be or act like a coderef (either a coderef, blessed or
+unblessed, or possesses a coderef overload) the type is invoked as a sub, with
+the data as its parameter. Its return value is treated as a boolean; if it
+also dies with a message describing the failure, this message is used in the
+failure diagnostics.
+
+L<Type::Tiny> types fall into this category, and are fully supported.
+
+=back
+
+=back
+
+=for Pod::Coverage descend
+diag_message
+init
+renderExp
+renderGot
+
+=head1 CAVEATS
+
+Regular strings describing a type under a particular system
+(e.g. L<Moose>, L<Params::Validate>) are not currently supported.
+
+=head1 SUPPORT
+
+=for stopwords irc
+
+Bugs may be submitted through L<https://rt.cpan.org/Public/Dist/Display.html?Name=Test-Deep-Type>.
+I am also usually active on irc, as 'ether' at L<irc://irc.perl.org>.
+
+=head1 SEE ALSO
+
+=over 4
+
+
+
+=back
+
+* L<Test::Deep>
+* L<Test::TypeConstraints>
+* L<Test::Type>
+* L<Test::Deep::Matcher>
+* L<MooseX::Types>
+* L<Moose::Meta::TypeConstraint>
+* L<Moo>
+* L<Type::Tiny>
+
+=head1 AUTHOR
+
+Karen Etheridge <ether@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Karen Etheridge.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
