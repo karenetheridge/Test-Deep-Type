@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.006     2014-08-23 23:31:03Z
           - fix pod error
 
 0.005     2014-08-23 20:49:37Z
