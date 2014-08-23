@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - fix pod error
 
 0.005     2014-08-23 20:49:37Z
           - updated metadata, generated tests, etc
