@@ -145,16 +145,14 @@ might be used in a L<Moo> type constraint).
 
 =head1 FUNCTIONS
 
-=over
-
-=item * C<is_type>
+=head2 C<is_type>
 
 Exported by default; to be used within a L<Test::Deep> comparison function
 such as L<cmp_deeply|Test::Deep/COMPARISON FUNCTIONS>.
 As this module aims to be a solution for many popular
 type systems, we attempt to use the type in multiple ways:
 
-=over
+=over 4
 
 =item L<MooseX::Types>/L<Moose::Meta::TypeConstraint>-style types:
 
@@ -171,8 +169,6 @@ also dies with a message describing the failure, this message is used in the
 failure diagnostics.
 
 L<Type::Tiny> types fall into this category, and are fully supported.
-
-=back
 
 =back
 
