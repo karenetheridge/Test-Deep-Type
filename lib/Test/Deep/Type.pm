@@ -36,7 +36,7 @@ sub diag_message
 {
     my ($self, $where) = @_;
     my $name = $self->_type_name($self->{type});
-    return "Validating $where as a"
+    return 'Validating ' . $where . ' as a'
         . (defined $name ? ' ' . $name : 'n unknown')
         . ' type';
 }
