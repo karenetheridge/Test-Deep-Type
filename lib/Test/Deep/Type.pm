@@ -47,7 +47,7 @@ sub diag_message
 
 sub renderGot
 {
-    my $self = shift;
+    my $self = shift;   # my $got = shift;
     return defined $self->{error_message} ? $self->{error_message} : 'failed';
 }
 
