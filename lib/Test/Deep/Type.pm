@@ -7,20 +7,25 @@ package Test::Deep::Type;
 
 our $VERSION = '0.007';
 
-use parent 'Test::Deep::Cmp';
-use Scalar::Util qw(blessed reftype);
-use Safe::Isa;
-use Try::Tiny;
-use namespace::clean;
 use Exporter 'import';
-
 our @EXPORT = qw(is_type);
 
 sub is_type($)
 {
     my $type = shift;
-    return __PACKAGE__->new($type);
+    return Test::Deep::Type::Object->new($type);
 }
+
+package # hide from PAUSE
+    Test::Deep::Type::Object;
+
+our $VERSION = '0.007';
+
+use parent 'Test::Deep::Cmp';
+use Scalar::Util qw(blessed reftype);
+use Safe::Isa;
+use Try::Tiny;
+use namespace::clean;
 
 sub init
 {
