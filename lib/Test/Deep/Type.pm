@@ -23,7 +23,6 @@ our $VERSION = '0.007';
 
 use parent 'Test::Deep::Cmp';
 use Scalar::Util ();
-use Safe::Isa;
 use Try::Tiny ();
 
 sub init
@@ -67,7 +66,7 @@ sub _is_type
 {
     my ($self, $type, $got) = @_;
 
-    if ($type->$_can('validate'))
+    if (eval { $type->can('validate') })
     {
         $self->{error_message} = $type->validate($got);
         return !defined($self->{error_message});
