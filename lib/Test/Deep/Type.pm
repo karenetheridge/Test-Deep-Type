@@ -22,10 +22,9 @@ package # hide from PAUSE
 our $VERSION = '0.007';
 
 use parent 'Test::Deep::Cmp';
-use Scalar::Util qw(blessed reftype);
+use Scalar::Util ();
 use Safe::Isa;
-use Try::Tiny;
-use namespace::clean;
+use Try::Tiny ();
 
 sub init
 {
@@ -77,9 +76,9 @@ sub _is_type
     # last ditch effort - use the type as a coderef
     if (__isa_coderef($type))
     {
-        return try {
+        return Try::Tiny::try {
             $type->($got)
-        } catch {
+        } Try::Tiny::catch {
             chomp($self->{error_message} = $_);
             undef;
         };
@@ -97,14 +96,14 @@ sub _type_name
     my ($self, $type) = @_;
 
     # use $type->name if we can
-    my $name = try { $type->name };
+    my $name = eval { $type->name };
     return $name if $name;
 
     # ...or stringify, if possible
     return "$type" if overload::Method($type, '""');
 
     # ...or its package name, if it has one
-    my $class = blessed($type);
+    my $class = Scalar::Util::blessed($type);
     return $class if defined $class;
 
     # plain old subref perhaps?
@@ -114,7 +113,7 @@ sub _type_name
 sub __isa_coderef
 {
     ref $_[0] eq 'CODE'
-        or (reftype($_[0]) || '') eq 'CODE'
+        or (Scalar::Util::reftype($_[0]) || '') eq 'CODE'
         or overload::Method($_[0], '&{}')
 }
 
