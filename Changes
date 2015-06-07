@@ -1,6 +1,7 @@
 Revision history for Test-Deep-Type
 
 {{$NEXT}}
+          - some refactoring, and elimination of some prerequisites
 
 0.006     2014-08-23 23:31:03Z
           - fix pod error
