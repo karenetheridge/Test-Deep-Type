@@ -5,6 +5,8 @@ package Test::Deep::Type;
 # KEYWORDS: testing tests plugin types
 # vim: set ts=8 sw=4 tw=78 et :
 
+our $VERSION = '0.007';
+
 use parent 'Test::Deep::Cmp';
 use Scalar::Util qw(blessed reftype);
 use Safe::Isa;
