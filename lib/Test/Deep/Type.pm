@@ -7,7 +7,7 @@ package Test::Deep::Type;
 
 our $VERSION = '0.007';
 
-use Exporter 'import';
+use Exporter 5.57 'import';
 our @EXPORT = qw(is_type);
 
 sub is_type($)
