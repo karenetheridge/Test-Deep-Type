@@ -12,8 +12,7 @@ our @EXPORT = qw(is_type);
 
 sub is_type($)
 {
-    my $type = shift;
-    return Test::Deep::Type::Object->new($type);
+    return Test::Deep::Type::Object->new($_[0]);
 }
 
 package # hide from PAUSE
