@@ -141,7 +141,8 @@ __END__
 
 =head1 DESCRIPTION
 
-C<Test::Deep::Type> provides the sub C<is_type> to indicate that the data
+This is a L<Test::Deep> plugin that
+provides the sub C<is_type> to indicate that the data
 being tested must validate against the passed type. This is an actual type
 I<object>, not a string name -- for example something provided via
 L<MooseX::Types>, or a plain old coderef that returns a bool (such as what
