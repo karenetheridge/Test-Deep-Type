@@ -3,7 +3,7 @@ use warnings;
 package Test::Deep::Type;
 # ABSTRACT: A Test::Deep plugin for validating type constraints
 # KEYWORDS: testing tests plugin types
-# vim: set ts=8 sts=4 sw=4 tw=78 et :
+# vim: set ts=8 sts=4 sw=4 tw=115 et :
 
 our $VERSION = '0.007';
 
