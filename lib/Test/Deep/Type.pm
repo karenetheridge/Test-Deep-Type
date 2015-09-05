@@ -189,13 +189,6 @@ renderGot
 Regular strings describing a type under a particular system
 (e.g. L<Moose>, L<Params::Validate>) are not currently supported.
 
-=head1 SUPPORT
-
-=for stopwords irc
-
-Bugs may be submitted through L<https://rt.cpan.org/Public/Dist/Display.html?Name=Test-Deep-Type>.
-I am also usually active on irc, as 'ether' at L<irc://irc.perl.org>.
-
 =head1 SEE ALSO
 
 =for :list
