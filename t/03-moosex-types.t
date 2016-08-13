@@ -3,11 +3,9 @@ use warnings;
 
 use Test::Tester 0.108;
 
-# FIXME: we should be able to pass an import arg to Test::Requires
-BEGIN {
-    use Test::Requires 'MooseX::Types::Moose';
-    MooseX::Types::Moose->import('Str');
-}
+use Test::Needs 'MooseX::Types::Moose';
+use MooseX::Types::Moose 'Str';
+
 use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::Deep;
