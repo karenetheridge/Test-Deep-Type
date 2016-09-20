@@ -8,7 +8,7 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 check_tests(
     sub {
         local $Test::Builder::Level = $Test::Builder::Level + 1;
-        do 'examples/demo.t'
+        do './examples/demo.t' or die $@;
     },
     [
         {

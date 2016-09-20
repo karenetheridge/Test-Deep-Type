@@ -30,3 +30,4 @@ cmp_deeply(
 );
 
 done_testing if not $INC{'Test/Tester.pm'};
+1;
