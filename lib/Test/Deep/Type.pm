@@ -5,7 +5,7 @@ package Test::Deep::Type;
 # ABSTRACT: A Test::Deep plugin for validating type constraints
 # KEYWORDS: testing tests plugin types
 
-our $VERSION = '0.007';
+our $VERSION = '0.008';
 
 use Exporter 5.57 'import';
 our @EXPORT = qw(is_type);
@@ -18,7 +18,7 @@ sub is_type($)
 package # hide from PAUSE
     Test::Deep::Type::Object;
 
-our $VERSION = '0.007';
+our $VERSION = '0.008';
 
 use parent 'Test::Deep::Cmp';
 use Scalar::Util ();
