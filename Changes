@@ -1,6 +1,6 @@
 Revision history for Test-Deep-Type
 
-{{$NEXT}}
+0.008     2016-09-27 00:56:53Z
           - fix test that dies badly when optional prereq is not available
 
 0.007     2016-09-24 00:07:43Z
