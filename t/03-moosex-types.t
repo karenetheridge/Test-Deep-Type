@@ -1,9 +1,8 @@
 use strict;
 use warnings;
 
-use Test::Tester 0.108;
-
 use Test::Needs 'MooseX::Types::Moose';
+use Test::Tester 0.108;
 use MooseX::Types::Moose 'Str';
 
 use Test::More 0.88;
