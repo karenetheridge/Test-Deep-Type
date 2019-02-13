@@ -70,13 +70,13 @@ check_tests(
         cmp_deeply({ greeting => 'hi' }, { greeting => is_type(TypeHiLite) }, 'hi validates as a TypeHiLite');
         cmp_deeply({ greeting => 'hi' }, { greeting => is_type(TypeHiTiny) }, 'hi validates as a TypeHiTiny');
     },
-    [ map { +{
+    [ map +{
         actual_ok => 1,
         ok => 1,
         diag => '',
         name => "hi validates as a $_",
         type => '',
-    } } qw(TypeHi TypeHiLite TypeHiTiny) ],
+    }, qw(TypeHi TypeHiLite TypeHiTiny) ],
     'validation successful',
 );
 
